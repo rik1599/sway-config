@@ -1,0 +1,14 @@
+*
+!.gitignore
+
+!sway/
+!sway/*
+
+!tofi/
+!tofi/*
+
+!wlogout/
+!wlogout/*
+
+!waybar/
+!waybar/*
