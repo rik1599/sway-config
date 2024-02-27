@@ -12,6 +12,7 @@ sudo apt install -y \
 	xdg-desktop-portal-wlr \
 	xwayland \
 	chromium \
+	imv \
 	flatpak \
 	cups \
 	simple-scan \
