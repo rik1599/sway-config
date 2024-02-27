@@ -54,6 +54,13 @@ sudo systemctl enable cups --now
 git clone https://github.com/rik1599/sway-config.git ~/.config
 
 #
+# Neovim
+#
+curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+chmod u+x nvim.appimage
+sudo mv nvim.appimage /usr/bin/nvim
+
+#
 # Font Awesome 6
 #
 mkdir -p ~/.local/share/fonts
