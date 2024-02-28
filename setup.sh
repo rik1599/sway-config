@@ -10,6 +10,7 @@ sudo apt install -y \
 	swayidle \
 	swaylock \
 	xdg-desktop-portal-wlr \
+	wlsunset \
 	xwayland \
 	chromium \
 	imv \

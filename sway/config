@@ -214,6 +214,7 @@ bar swaybar_command waybar
 exec /usr/lib/x86_64-linux-gnu/libexec/polkit-kde-authentication-agent-1
 exec wl-paste -t text --watch clipman store --no-persist
 exec mako
+exec wlsunset -l 45.8 -L 13.2
 
 exec rm -f /tmp/wob && mkfifo /tmp/wob && tail -f /tmp/wob | wob
 
