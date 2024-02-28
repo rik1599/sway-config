@@ -9,24 +9,6 @@
 # Logo key. Use Mod1 for Alt.
 set $mod Mod4
 
-# Your preferred terminal emulator
-set $term foot
-
-# Your preferred application launcher
-# Note: pass the final command to swaymsg so that the resulting window can be opened
-# on the original workspace that the command was run on.
-set $menu tofi-drun --terminal=$term | xargs swaymsg exec --
-
-# Your browser
-set $browser chromium
-
-# Clipboard picker
-set $clipboard clipman pick --tool=STDOUT | tofi -c ~/.config/tofi/clipboard | wl-copy
-
-# Screenshot
-set $screenshot grim - | wl-copy
-set $screenclip grim -g "$(slurp)" - | wl-copy
-
 ### Output configuration
 #
 output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
@@ -67,18 +49,22 @@ exec swayidle -w \
 # Basics:
 #
     # Start a terminal
+    set $term foot
     bindsym $mod+Return exec $term
 
     # Kill focused window
     bindsym $mod+Shift+q kill
 
     # Start your launcher
+    set $menu tofi-drun --terminal=$term | xargs swaymsg exec --
     bindsym $mod+d exec $menu
 
     # Start your browser
+    set $browser chromium
     bindsym $mod+Shift+Return exec $browser
 
     # Clipman picker
+    set $clipboard clipman pick --tool=STDOUT | tofi -c ~/.config/tofi/clipboard | wl-copy
     bindsym $mod+c exec $clipboard
 
     # Drag floating windows by holding down $mod and left mouse button.
@@ -98,8 +84,8 @@ exec swayidle -w \
     bindsym $mod+l exec swaylock
 
     # Screenshot
-    bindsym --no-repeat $mod+Print exec $screenshot
-    bindsym --no-repeat $mod+Shift+Print exec $screenclip
+    bindsym --no-repeat $mod+Print exec grim - | wl-copy
+    bindsym --no-repeat $mod+Shift+Print exec grim -g "$(slurp)" - | wl-copy
 #
 # Volume and brightness
 #
@@ -110,6 +96,14 @@ exec swayidle -w \
     bindsym --locked XF86AudioRaiseVolume exec wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+ && $vol > /tmp/wob 
     bindsym --locked XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- && $vol > /tmp/wob
     bindsym --locked XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+#
+# Clamshell mode
+#
+    set $laptop eDP-1
+    bindswitch --reload --locked lid:on output $laptop disable
+    bindswitch --reload --locked lid:off output $laptop enable
+    exec_always ~/.config/sway/clamshell.sh
+
 #
 # Moving around:
 #
