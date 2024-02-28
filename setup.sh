@@ -28,7 +28,7 @@ sudo apt install -y \
 	slurp \
 	zsh \
 	thunar \
-	polkit-kde-agent \
+	polkit-kde-agent-1 \
 	mako-notifier \
 	wlogout \
 	wob \
