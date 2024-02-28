@@ -44,7 +44,7 @@ sudo apt install -y --no-install-recommends \
 # Add user to groups
 #
 echo "Add user to groups"
-sudo usermod -a -G input, lpadmin $USER
+sudo usermod -a -G input,lpadmin $USER
 
 #
 # Start services
