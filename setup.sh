@@ -73,7 +73,7 @@ echo "Font Awesome install"
 mkdir -p ~/.local/share/fonts
 curl https://use.fontawesome.com/releases/v6.5.1/fontawesome-free-6.5.1-desktop.zip \
 	-o fontawesome.zip
-unzip -j fontawesome.zip "fontawesome-free-6.5.1-desktop/otfs/*" ~/.local/share/fonts
+unzip -j fontawesome.zip "fontawesome-free-6.5.1-desktop/otfs/*" -d ~/.local/share/fonts
 fc-cache
 rm fontawesome.zip
 
