@@ -88,12 +88,6 @@ tar -xf adw-gtk3.tar.xz -C ~/.local/share/themes
 rm adw-gtk3.tar.xz
 
 #
-# Flathub setup
-#
-echo "Flathub setup"
-flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-
-#
 # Oh my zsh
 #
 echo "Install Oh my zsh"
