@@ -3,7 +3,6 @@ height = 25%
 border-width = 0
 outline-width = 0
 result-spacing = 10
-num-results = 4
 font = /usr/share/fonts/truetype/noto/NotoSansMono-Regular.ttf
 background-color = #000A
 ascii-input = true
