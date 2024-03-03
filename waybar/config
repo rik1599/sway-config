@@ -1,46 +1,33 @@
 {
-    "spacing": 4, // Gaps between modules (4px)
-    // Choose the order of the modules
-    "modules-left": ["custom/menu", "sway/workspaces", "keyboard-state"],
-    "modules-center": ["pulseaudio", "cpu", "memory", "temperature", "backlight"],
-    "modules-right": ["idle_inhibitor", "network", "tray", "sway/language", "clock", "custom/logout"],
+    "modules-left": ["sway/workspaces", "sway/window"],
+    "modules-center": ["clock", "idle_inhibitor"],
+    "modules-right": ["tray", "network", "battery", "pulseaudio", "cpu", "memory", "temperature", "custom/logout"],
     
     "custom/logout": {
         "format": "",
 	"tooltip": "false",
 	"on-click": "wlogout -p layer-shell"
     },
-
-    "custom/menu": {
-	"format": "",
-        "tooltip": false,
-        "on-click": "tofi-drun --terminal=foot | xargs swaymsg exec --"
-    },
     
     "sway/workspaces": {
-        "all-outputs": true,
+    	"all-outputs": true,
         "disable-scroll": true,
-        "persistent_workspaces": {
-            "1": [],
-            "2": [],
-            "3": [],
-            "4": [],
-        },
-	"format": "{name}",
-        //"window-rewrite-default": "{name}",
-	//"window-rewrite": {
-	//    "class<chromium>": ""
-	//}
+	"format": "{name}"
     },
 
-    "keyboard-state": {
-        "numlock": true,
-        "capslock": true,
-        "format": "{name} {icon}",
-        "format-icons": {
-            "locked": "",
-            "unlocked": ""
-        }
+    "sway/window": {
+    	"format": "{}",
+    	"max-length": 50,
+    	"all-outputs" : true,
+    	"offscreen-css" : true,
+    	"offscreen-css-text": "(inactive)",
+    	"rewrite": {
+        	"(.*) - Chromium": " $1",
+		"(.*)@(.*):(.*)": "  $3",
+		"(.*)foot": "  $1",
+		"(nvim|nano) (.*)": " $2",
+		"(.*) - Thunar": " $1"
+    	},
     },
 
     "idle_inhibitor": {
@@ -53,8 +40,8 @@
 
     "tray": {
         "spacing": 10
-    }
-,
+    },
+
     "clock": {
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": "{:%d/%m/%Y}"
@@ -75,11 +62,7 @@
         "format": "{temperatureC}°C {icon}",
         "format-icons": ["", "", ""]
     },
-   
-    "backlight": {
-        "format": "{percent}% {icon}",
-        "format-icons": ["", ""]
-    },
+
     "battery": {
         "states": {
             // "good": 95,
@@ -96,21 +79,18 @@
     },
 
     "network": {
-        "format-wifi": "{essid} ({signalStrength}%) ",
-        "format-ethernet": "{ipaddr}/{cidr} ",
-        "tooltip-format": "{ifname} via {gwaddr} ",
+        "format-wifi": "{essid} ({signalStrength}%)  ",
+        "format-ethernet": "{ipaddr} ",
+        "tooltip-format": " {bandwidthUpBits}   {bandwidthDownBits}",
         "format-linked": "{ifname} (No IP) ",
-        "format-disconnected": "Disconnected ⚠",
-        "format-alt": "{ifname}: {ipaddr}/{cidr}"
+        "format-disconnected": "Disconnected ⚠"
     },
 
     "pulseaudio": {
-        "format": "{volume}% {icon} {format_source}",
-        "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": " {icon} {format_source}",
-        "format-muted": " {format_source}",
-        "format-source": "{volume}% ",
-        "format-source-muted": "",
+        "format": "{volume}% {icon}",
+        "format-bluetooth": "{volume}% {icon}",
+        "format-bluetooth-muted": " {icon}",
+        "format-muted": " ",
         "format-icons": {
             "headphone": "",
             "hands-free": "",
