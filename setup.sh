@@ -35,7 +35,8 @@ sudo apt install -y \
 	git \
 	bc \
 	unzip \
-	tar
+	tar \
+	libglib2.0-bin
 
 sudo apt install -y --no-install-recommends \
 	pavucontrol
@@ -76,6 +77,7 @@ curl https://use.fontawesome.com/releases/v6.5.1/fontawesome-free-6.5.1-desktop.
 unzip -j fontawesome.zip "fontawesome-free-6.5.1-desktop/otfs/*" -d ~/.local/share/fonts
 fc-cache
 rm fontawesome.zip
+gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3-dark' && gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 
 #
 # Adw-gtk3
