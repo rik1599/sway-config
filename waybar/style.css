@@ -33,11 +33,11 @@ window#waybar {
 }
 #workspaces button:hover {
     box-shadow: inherit;
-    background-color: rgba(0,43,51,0.85);
+    background-color: rgba(10,50,70,0.85);
 }
 
 #workspaces button.focused {
-    background-color: rgba(0,43,51,0.85);
+    background-color: rgba(10,50,70,0.85);
 }
 
 #window {

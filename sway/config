@@ -11,7 +11,8 @@ set $mod Mod4
 
 ### Output configuration
 #
-output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+# output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+output * bg ~/.config/sway/wallpaper.jpg fill
 
 output HDMI-A-1 resolution 1680x1050 position 0,0
 output eDP-1 resolution 1366x768 position 1680,282
@@ -203,6 +204,7 @@ for_window [app_id="org.kde.polkit-kde-authentication-agent-1"] floating enable
 for_window [app_id="pavucontrol"] floating enable
 for_window [app_id="imv"] floating enable
 for_window [app_id="org.telegram.desktop"] floating enable; resize set 1000 600
+for_window [app_id="xdg-desktop-portal-gtk"] floating enable; resize set 1000 600
 
 #
 # Status Bar:

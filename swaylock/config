@@ -1,4 +1,4 @@
-image=/usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png
+image=~/.config/sway/wallpaper.jpg
 color=dcdccc55
 indicator-radius=100
 indicator-thickness=50
