@@ -11,6 +11,7 @@ sudo apt install -y \
 	swayidle \
 	swaylock \
 	xdg-desktop-portal-wlr \
+	xdg-desktop-portal-gtk \
 	wlsunset \
 	xwayland \
 	chromium \
@@ -77,7 +78,6 @@ curl https://use.fontawesome.com/releases/v6.5.1/fontawesome-free-6.5.1-desktop.
 unzip -j fontawesome.zip "fontawesome-free-6.5.1-desktop/otfs/*" -d ~/.local/share/fonts
 fc-cache
 rm fontawesome.zip
-gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3-dark' && gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 
 #
 # Adw-gtk3
@@ -88,6 +88,7 @@ curl -L https://github.com/lassekongo83/adw-gtk3/releases/download/v5.2/adw-gtk3
 	-o adw-gtk3.tar.xz
 tar -xf adw-gtk3.tar.xz -C ~/.local/share/themes
 rm adw-gtk3.tar.xz
+gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3-dark' && gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 
 #
 # Oh my zsh
