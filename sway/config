@@ -59,6 +59,7 @@ exec swayidle -w \
     # Start your launcher
     set $menu tofi-drun --terminal=$term | xargs swaymsg exec --
     bindsym $mod+d exec $menu
+    bindsym $mod+space exec $menu
 
     # Start your browser
     set $browser chromium
@@ -163,9 +164,6 @@ exec swayidle -w \
 
     # Toggle the current focus between tiling and floating mode
     bindsym $mod+Shift+space floating toggle
-
-    # Swap focus between the tiling area and the floating area
-    bindsym $mod+space focus mode_toggle
 
     # Move focus to the parent container
     bindsym $mod+a focus parent
