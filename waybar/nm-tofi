@@ -1,0 +1,118 @@
+#!/bin/bash
+
+CONFIG_FILE=$1
+CONNECT_LINE="Connect to WiFi"
+DELETE_LINE="Delete a connection"
+
+NOTIFY='notify-send -t 3000'
+TOFI="tofi -c $CONFIG_FILE"
+
+connections () {
+    local LIST=$(nmcli -f STATE,NAME,TYPE connection show | sed '1d')
+    local LINE=$(echo -e "$LIST\n$CONNECT_LINE\n$DELETE_LINE" | $TOFI | sed 's/ \{2,\}/:/g')
+
+    if [ "$LINE" = "" ]; then
+        return 0
+    fi
+
+    if [ "$LINE" = "$CONNECT_LINE" ]; then
+        return 1
+    fi
+
+    if [ "$LINE" = "$DELETE_LINE" ]; then
+        return 2
+    fi
+
+    local CONNECTION=$(echo "$LINE" | cut -d':' -f2)
+    local IS_ACTIVATED=$(echo "$LINE" | cut -d':' -f1)
+    
+    if [ "$IS_ACTIVATED" = "activated" ]; then
+        if OUT=$(nmcli connection down "$CONNECTION" 2>&1); then
+            $NOTIFY "Disconnected" "Disconnected to $CONNECTION"
+        else
+            $NOTIFY "Error" "$OUT"
+        fi
+    else
+        local id=$(notify-send -p "Connecting" "Connecting to $CONNECTION")
+        if OUT=$(nmcli connection up "$CONNECTION" 2>&1); then
+            $NOTIFY -r $id "Connected" "Connected to $CONNECTION"
+        else
+            $NOTIFY -r $id "Error" "$OUT"
+        fi
+    fi
+}
+
+wifi_connect () {
+    nmcli device wifi rescan
+    local LIST=$(nmcli -f IN-USE,SSID,RATE,SIGNAL,BARS device wifi list | sed '1d')
+    local LINE=$(echo -e "$LIST" | $TOFI | sed 's/ \{2,\}/:/g')
+    
+    if [ "$LINE" = "" ]; then
+        return 0
+    fi
+
+    local IS_ACTIVATED=$(echo "$LINE" | cut -d':' -f1)
+    local CONNECTION=$(echo "$LINE"| cut -d':' -f2)
+    if [ "$IS_ACTIVATED" = '*' ]; then
+        if OUT=$(nmcli connection down "$CONNECTION" 2>&1); then
+            $NOTIFY "Disconnected" "Disconnected to $CONNECTION"
+        else
+            $NOTIFY "Error" "$OUT"
+        fi
+        return 0   
+    fi
+
+    local KNOWN_CONNECTIONS=$(nmcli -get-values NAME connection show)
+    if [[ "$KNOWN_CONNECTIONS" =~ "$CONNECTION" ]]; then
+        local id=$(notify-send -p "Connecting" "Connecting to $CONNECTION")
+        if OUT=$(nmcli connection up "$CONNECTION" 2>&1); then
+            $NOTIFY -r $id "Connected" "Connected to $CONNECTION"
+        else
+            $NOTIFY -r $id "Error" "$OUT"
+        fi
+        return 0
+    fi
+
+    local PASSWORD=$($TOFI --require-match=false --hide-input=true --hidden-character="*" --prompt-text="WiFi password: "< /dev/null)
+    if [ "$PASSWORD" = "" ]; then
+        return 0
+    fi
+    local id=$(notify-send -p "Connecting" "Connecting to $CONNECTION")
+    until OUT=$(nmcli device wifi connect "$CONNECTION" password "$PASSWORD" 2>&1); do
+        $NOTIFY "Error" "$OUT"
+        PASSWORD=$($TOFI --require-match=false --hide-input=true --hidden-character="*" --prompt-text="WiFi password: "< /dev/null)
+        if [ "$PASSWORD" = "" ]; then
+            $NOTIFY -r $id "Aborted" "Connection to $CONNECTION aborted"
+            nmcli connection delete "$CONNECTION"
+            return 0
+        fi
+    done
+    $NOTIFY -r $id "Connected" "Connected to $CONNECTION"
+    return 0
+}
+
+delete () {
+    local LIST=$(nmcli -f NAME,TYPE connection show | sed '1d')
+    local LINE=$(echo -e "$LIST" | $TOFI | sed 's/ \{2,\}/:/g')
+
+    if [ "$LINE" = "" ]; then
+        return 0
+    fi
+
+    local CONNECTION=$(echo "$LINE" | cut -d':' -f1)
+    if OUT=$(nmcli connection delete "$CONNECTION" 2>&1); then
+        $NOTIFY "Deleted" "Deleted $CONNECTION"
+    else
+        $NOTIFY "Error" "$OUT"
+    fi
+}
+
+connections
+case $? in
+    1)
+        wifi_connect
+        ;;
+    2)
+        delete
+        ;;
+esac

@@ -83,7 +83,8 @@
         "format-ethernet": "{ipaddr} ",
         "tooltip-format": " {bandwidthUpBits}   {bandwidthDownBits}",
         "format-linked": "{ifname} (No IP) ",
-        "format-disconnected": "Disconnected ⚠"
+        "format-disconnected": "Disconnected ⚠",
+        "on-click": "swaymsg exec ~/.config/waybar/nm-tofi ~/.config/waybar/tofi-config"
     },
 
     "pulseaudio": {
