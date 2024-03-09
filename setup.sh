@@ -1,7 +1,7 @@
 #
 # Packages installs
 #
-echo "Installing packages"
+echo "======== Installing packages ========"
 sudo apt update -y
 sudo apt upgrade -y
 
@@ -37,7 +37,9 @@ sudo apt install -y \
 	bc \
 	unzip \
 	tar \
-	libglib2.0-bin
+	libglib2.0-bin \
+	network-manager \
+	libnotify-bin \
 
 sudo apt install -y --no-install-recommends \
 	pavucontrol
@@ -45,25 +47,29 @@ sudo apt install -y --no-install-recommends \
 #
 # Add user to groups
 #
-echo "Add user to groups"
+echo "======== Adding user to groups ========"
 sudo usermod -a -G input,lpadmin $USER
 
 #
 # Start services
 #
-echo "Start services"
+echo "======== Starting services ========"
 sudo systemctl enable cups --now
+sudo systemctl enable NetworkManager --now
 
 #
 # Install configuration files
 #
-echo "Config files"
+echo "======== Installing configuration files ========"
 git clone https://github.com/rik1599/sway-config.git ~/.config
+cd ~/.config
+git remote set-url origin git@github.com:rik1599/sway-config.git
+cd
 
 #
 # Neovim
 #
-echo "Neovim install"
+echo "======== Installing Neovim ========"
 curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
 chmod u+x nvim.appimage
 sudo mv nvim.appimage /usr/bin/nvim
@@ -71,7 +77,7 @@ sudo mv nvim.appimage /usr/bin/nvim
 #
 # Font Awesome 6
 #
-echo "Font Awesome install"
+echo "======== Installing Font Awesome 6 ========"
 mkdir -p ~/.local/share/fonts
 curl https://use.fontawesome.com/releases/v6.5.1/fontawesome-free-6.5.1-desktop.zip \
 	-o fontawesome.zip
@@ -82,7 +88,7 @@ rm fontawesome.zip
 #
 # Adw-gtk3
 #
-echo "Adw-gtk3 install"
+echo "======== Installing Adw-gtk3 ========"
 mkdir -p .local/share/themes
 curl -L https://github.com/lassekongo83/adw-gtk3/releases/download/v5.2/adw-gtk3v5-2.tar.xz \
 	-o adw-gtk3.tar.xz
@@ -93,14 +99,14 @@ gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3-dark' && gsettings
 #
 # Oh my zsh
 #
-echo "Install Oh my zsh"
+echo "======== Installing Oh my zsh ========"
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 echo "source ~/.config/sway/start" >> .zshrc 
 
 #
 # Change shell to zsh
 #
-echo "Changing shell"
+echo "======== Changing shell to zsh ========"
 chsh $USER -s /usr/bin/zsh
 
 #
