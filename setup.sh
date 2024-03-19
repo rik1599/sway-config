@@ -40,6 +40,7 @@ sudo apt install -y \
 	libglib2.0-bin \
 	network-manager \
 	libnotify-bin \
+	gnome-system-monitor
 
 sudo apt install -y --no-install-recommends \
 	pavucontrol

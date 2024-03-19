@@ -203,6 +203,7 @@ for_window [app_id="pavucontrol"] floating enable; resize set 1000 600
 for_window [app_id="imv"] floating enable
 for_window [app_id="org.telegram.desktop"] floating enable; resize set 1000 600
 for_window [app_id="xdg-desktop-portal-gtk"] floating enable; resize set 1000 600
+for_window [app_id="gnome-system-monitor"] floating enable;
 
 #
 # Status Bar:
@@ -219,4 +220,5 @@ exec wlsunset -l 45.8 -L 13.2
 
 exec rm -f /tmp/wob && mkfifo /tmp/wob && tail -f /tmp/wob | wob
 
+exec_always xrandr --output $(xrandr | grep -m 1 XWAYLAND | awk '{print $1;}') --primary
 include /etc/sway/config.d/*

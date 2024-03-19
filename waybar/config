@@ -53,11 +53,12 @@
     "cpu": {
         "format": "{usage}% ",
         "tooltip": false,
-        "on-click": "foot htop"
+        "on-click": "swaymsg exec gnome-system-monitor"
     },
    
     "memory": {
-        "format": "{}% "
+        "format": "{}% ",
+	"on-click": "swaymsg exec gnome-system-monitor"
     },
    
     "temperature": {
